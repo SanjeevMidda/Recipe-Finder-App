@@ -3,19 +3,58 @@
   font-family: Helvetica, sans-serif;
   font-weight: 400;
   margin: 0px;
+  text-decoration: none;
+
+  color: inherit;
 }
 
 .App {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100dvh;
 }
 
+.mainContainer {
+  width: 80dvw;
+  height: 90dvh;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 80dvw;
+
+  .logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #6daaff;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  gap: 30px;
+  padding: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .nav-link {
-  font-weight: 400;
+  font-size: 14px;
 }
 
 .nav-link.active {
   font-weight: 800;
+}
+
+.customerGreeting :nth-child(2) {
+  color: #d9d9d9;
 }

@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 const Navigation = () => {
   return (
     <div className="navigation">
-      <div className="logo"></div>
+      <nav className="nav">
+        <div className="logo"></div>
 
-      <nav>
         <NavLink className="nav-link" to="/" end>
           Home
         </NavLink>
@@ -16,6 +16,11 @@ const Navigation = () => {
           Favourites
         </NavLink>
       </nav>
+
+      <div className="customerGreeting">
+        <p>Welcome</p>
+        <p>John Appleseed</p>
+      </div>
     </div>
   );
 };
