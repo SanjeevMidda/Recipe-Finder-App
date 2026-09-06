@@ -1,0 +1,7 @@
+.nav-link {
+  font-weight: 400;
+}
+
+.nav-link.active {
+  font-weight: 800;
+}
