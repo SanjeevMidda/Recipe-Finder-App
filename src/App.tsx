@@ -6,16 +6,17 @@ import Navigation from "./components/Navigation";
 import Search from "./components/Search";
 
 function App() {
-  return;
-  <BrowserRouter>
-    <Navigation />
+  return (
+    <BrowserRouter>
+      <Navigation />
 
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/favourites" element={<Favourites />} />
-    </Routes>
-  </BrowserRouter>;
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/favourites" element={<Favourites />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
