@@ -1,4 +1,5 @@
 import { useState } from "react";
+import RecipeCard from "../components/RecipeCard";
 
 export type Meal = {
   idMeal: string;
@@ -59,26 +60,39 @@ export type Meal = {
 };
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [recipes, setRecipes] = useState<Meal[]>([]);
+
   const [searchStatus, setSearchStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+
   const [error, setError] = useState("");
 
   const searchRecipes = async (searchTerm: string) => {
     try {
       setSearchStatus("loading");
+
+      setError("");
+
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`
       );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch recipes");
+      }
+
       const data = await response.json();
 
-      setRecipes(data);
+      setRecipes(data.meals ?? []);
+
       setSearchStatus("success");
     } catch {
       setSearchStatus("error");
-      setError("Something went wrong. Please enter a new search term.");
+
+      setError("Something went wrong. Please try again.");
     }
   };
 
@@ -86,18 +100,35 @@ const Search = () => {
     searchRecipes(searchTerm);
   };
 
-  console.log(recipes);
-
   return (
     <div className="searchContainer">
       <div className="searchResults">
+        {searchStatus === "idle" && <p>Search for a recipe.</p>}
+
         {searchStatus === "loading" && <p>Loading...</p>}
+
+        {searchStatus === "error" && <p>{error}</p>}
+
         {searchStatus === "success" && recipes.length === 0 && (
           <p>No recipes found. Try another search.</p>
         )}
-        {searchStatus === "success"}
-        {searchStatus === "error" && <p>{error}</p>}
+
+        {searchStatus === "success" && recipes.length > 0 && (
+          <div>
+            {recipes.map((recipe) => (
+              <RecipeCard
+                key={recipe.idMeal}
+                recipeId={recipe.idMeal}
+                recipeImage={recipe.strMealThumb}
+                recipeName={recipe.strMeal}
+                category={recipe.strCategory}
+                cuisine={recipe.strArea}
+              />
+            ))}
+          </div>
+        )}
       </div>
+
       <div className="findContainer">
         <input
           type="text"
@@ -105,7 +136,8 @@ const Search = () => {
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
-        <button onClick={handleSearch}>search</button>
+
+        <button onClick={handleSearch}>Search</button>
       </div>
     </div>
   );
