@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
-import type { MealResponse } from "../types/MealResponse";
 import { getRecipeById } from "../services/recipeAPI";
 
 type RecipeDetailsProps = {
@@ -22,18 +21,20 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
       try {
         setStatus("loading");
 
-        const data = await getRecipeById(id!);
+        if (!id) {
+          setStatus("error");
+          return;
+        }
+
+        const data = await getRecipeById(id);
 
         if (!data.meals) {
           setRecipe(null);
-
           setStatus("success");
-
           return;
         }
 
         setRecipe(data.meals[0]);
-
         setStatus("success");
       } catch {
         setStatus("error");
