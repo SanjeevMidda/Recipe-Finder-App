@@ -27,7 +27,9 @@ const Search = ({ addFavourite }: SearchProps) => {
       setError("");
 
       const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(
+          searchTerm
+        )}`
       );
 
       if (!response.ok) {
