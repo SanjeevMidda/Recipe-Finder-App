@@ -47,6 +47,10 @@ const Search = ({ addFavourite }: SearchProps) => {
   };
 
   const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      return;
+    }
+
     searchRecipes(searchTerm);
   };
 
