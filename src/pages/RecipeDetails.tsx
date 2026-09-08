@@ -61,60 +61,86 @@ export type Meal = {
 
 const RecipeDetails = () => {
   const { id } = useParams();
+
   const [recipe, setRecipe] = useState<Meal | null>(null);
+
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
+        setStatus("loading");
+
         const response = await fetch(
           `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
         );
 
+        if (!response.ok) {
+          throw new Error("Failed to fetch recipe");
+        }
+
         const data = await response.json();
 
+        if (!data.meals) {
+          setRecipe(null);
+          setStatus("success");
+          return;
+        }
+
         setRecipe(data.meals[0]);
-      } catch (error) {
-        console.error("Failed to fetch recipe:", error);
+        setStatus("success");
+      } catch {
+        setStatus("error");
       }
     };
 
     fetchRecipe();
   }, [id]);
 
-  if (!recipe) {
-    return <p>Loading...</p>;
-  }
+  const ingredients: string[] = [];
 
-  const ingredients = [];
+  if (recipe) {
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = recipe[`strIngredient${i}` as keyof Meal];
+      const measure = recipe[`strMeasure${i}` as keyof Meal];
 
-  for (let i = 1; i <= 20; i++) {
-    const ingredient = recipe[`strIngredient${i}` as keyof Meal];
-    const measure = recipe[`strMeasure${i}` as keyof Meal];
-
-    if (ingredient) {
-      ingredients.push(`${measure} ${ingredient}`);
+      if (ingredient) {
+        ingredients.push(`${measure} ${ingredient}`);
+      }
     }
   }
 
   return (
     <div className="recipeDetailsContainer">
-      <h1>{recipe.strMeal}</h1>
+      {(status === "idle" || status === "loading") && <p>Loading...</p>}
 
-      <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+      {status === "error" && <p>Something went wrong. Please try again.</p>}
 
-      <p>Category: {recipe.strCategory}</p>
-      <p>Cuisine: {recipe.strArea}</p>
+      {status === "success" && !recipe && <p>Recipe not found.</p>}
 
-      <h2>Instructions</h2>
-      <p>{recipe.strInstructions}</p>
+      {status === "success" && recipe && (
+        <>
+          <h1>{recipe.strMeal}</h1>
 
-      <h2>Ingredients</h2>
+          <img src={recipe.strMealThumb} alt={recipe.strMeal} />
 
-      <ul>
-        {ingredients.map((ingredient) => (
-          <li key={ingredient}>{ingredient}</li>
-        ))}
-      </ul>
+          <p>Category: {recipe.strCategory}</p>
+          <p>Cuisine: {recipe.strArea}</p>
+
+          <h2>Instructions</h2>
+          <p>{recipe.strInstructions}</p>
+
+          <h2>Ingredients</h2>
+
+          <ul>
+            {ingredients.map((ingredient) => (
+              <li key={ingredient}>{ingredient}</li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };
