@@ -1,9 +1,10 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Favourites from "./components/Favourites";
-import Home from "./components/Home";
+import Favourites from "./pages/Favourites";
+import Home from "./pages/Home";
 import Navigation from "./components/Navigation";
-import Search from "./components/Search";
+import Search from "./pages/Search";
+import RecipeDetails from "./pages/RecipeDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/favourites" element={<Favourites />} />
+            <Route path="/recipe/:id" element={<RecipeDetails />} />
           </Routes>
         </div>
       </div>
