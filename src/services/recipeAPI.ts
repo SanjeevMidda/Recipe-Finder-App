@@ -15,3 +15,17 @@ export const searchRecipes = async (searchTerm: string) => {
 
   return data;
 };
+
+export const getRecipeById = async (id: string) => {
+  const response = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch recipe");
+  }
+
+  const data: MealResponse = await response.json();
+
+  return data;
+};

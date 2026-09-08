@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
 import type { MealResponse } from "../types/MealResponse";
+import { getRecipeById } from "../services/recipeAPI";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
@@ -21,23 +22,18 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
       try {
         setStatus("loading");
 
-        const response = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch recipe");
-        }
-
-        const data: MealResponse = await response.json();
+        const data = await getRecipeById(id!);
 
         if (!data.meals) {
           setRecipe(null);
+
           setStatus("success");
+
           return;
         }
 
         setRecipe(data.meals[0]);
+
         setStatus("success");
       } catch {
         setStatus("error");
