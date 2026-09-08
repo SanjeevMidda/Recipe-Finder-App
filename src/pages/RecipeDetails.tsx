@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
+import { MealResponse } from "../types/MealResponse";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
@@ -28,7 +29,7 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
           throw new Error("Failed to fetch recipe");
         }
 
-        const data = await response.json();
+        const data: MealResponse = await response.json();
 
         if (!data.meals) {
           setRecipe(null);
