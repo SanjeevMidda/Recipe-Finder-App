@@ -1,27 +1,23 @@
 import { Link } from "react-router-dom";
+import type { Meal } from "../types/Meal";
 
 type RecipeCardProps = {
-  recipeId: string;
-  recipeImage: string;
-  recipeName: string;
-  category: string;
-  cuisine: string;
+  recipe: Meal;
+  addFavourite: (recipe: Meal) => void;
 };
 
-const RecipeCard = ({
-  recipeId,
-  recipeImage,
-  recipeName,
-  category,
-  cuisine,
-}: RecipeCardProps) => {
+const RecipeCard = ({ recipe, addFavourite }: RecipeCardProps) => {
   return (
-    <Link to={`/recipe/${recipeId}`} className="recipeCardContainer">
-      <img src={recipeImage} alt={recipeName} />
-      <h2>{recipeName}</h2>
-      <h4>{category}</h4>
-      <h4>{cuisine}</h4>
-    </Link>
+    <div className="recipeCardContainer">
+      <Link to={`/recipe/${recipe.idMeal}`}>
+        <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+        <h2>{recipe.strMeal}</h2>
+        <h4>{recipe.strCategory}</h4>
+        <h4>{recipe.strArea}</h4>
+      </Link>
+
+      <button onClick={() => addFavourite(recipe)}>Add to favourites</button>
+    </div>
   );
 };
 
