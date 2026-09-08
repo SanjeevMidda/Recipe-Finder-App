@@ -2,6 +2,7 @@ import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import type { Meal } from "../types/Meal";
 import type { MealResponse } from "../types/MealResponse";
+import { searchRecipes } from "../services/recipeAPI";
 
 type SearchProps = {
   addFavourite: (recipe: Meal) => void;
@@ -18,22 +19,16 @@ const Search = ({ addFavourite }: SearchProps) => {
 
   const [error, setError] = useState("");
 
-  const searchRecipes = async (searchTerm: string) => {
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      return;
+    }
+
     try {
       setSearchStatus("loading");
       setError("");
 
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(
-          searchTerm
-        )}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch recipes");
-      }
-
-      const data: MealResponse = await response.json();
+      const data = await searchRecipes(searchTerm);
 
       setRecipes(data.meals ?? []);
       setSearchStatus("success");
@@ -41,14 +36,6 @@ const Search = ({ addFavourite }: SearchProps) => {
       setSearchStatus("error");
       setError("Something went wrong. Please try again.");
     }
-  };
-
-  const handleSearch = () => {
-    if (!searchTerm.trim()) {
-      return;
-    }
-
-    searchRecipes(searchTerm);
   };
 
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
-import { MealResponse } from "../types/MealResponse";
+import type { MealResponse } from "../types/MealResponse";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
