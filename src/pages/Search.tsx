@@ -1,13 +1,10 @@
 import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import type { Meal } from "../types/Meal";
+import type { MealResponse } from "../types/MealResponse";
 
 type SearchProps = {
   addFavourite: (recipe: Meal) => void;
-};
-
-type MealResponse = {
-  meals: Meal[] | null;
 };
 
 const Search = ({ addFavourite }: SearchProps) => {
