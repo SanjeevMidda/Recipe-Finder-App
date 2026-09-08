@@ -59,7 +59,12 @@ export type Meal = {
   strMeasure20: string;
 };
 
-const Search = () => {
+type SearchProps = {
+  favourites: Meal[];
+  addFavourite: (recipe: Meal) => void;
+};
+
+const Search = ({ favourites, addFavourite }: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [recipes, setRecipes] = useState<Meal[]>([]);

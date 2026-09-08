@@ -1,6 +1,7 @@
-import React from "react";
-
-const Favourites = () => {
+type FavouriteProps = {
+  removeFavourite: (recipeId: string) => void;
+};
+const Favourites = ({ removeFavourite }: FavouriteProps) => {
   return <div></div>;
 };
 

@@ -59,7 +59,13 @@ export type Meal = {
   strMeasure20: string;
 };
 
-const RecipeDetails = () => {
+type RecipeDetailsProps = {
+  favourites: Meal[];
+
+  addFavourite: (recipe: Meal) => void;
+};
+
+const RecipeDetails = ({ favourites, addFavourite }: RecipeDetailsProps) => {
   const { id } = useParams();
 
   const [recipe, setRecipe] = useState<Meal | null>(null);
