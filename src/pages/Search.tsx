@@ -6,6 +6,10 @@ type SearchProps = {
   addFavourite: (recipe: Meal) => void;
 };
 
+type MealResponse = {
+  meals: Meal[] | null;
+};
+
 const Search = ({ addFavourite }: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -30,7 +34,7 @@ const Search = ({ addFavourite }: SearchProps) => {
         throw new Error("Failed to fetch recipes");
       }
 
-      const data = await response.json();
+      const data: MealResponse = await response.json();
 
       setRecipes(data.meals ?? []);
       setSearchStatus("success");
