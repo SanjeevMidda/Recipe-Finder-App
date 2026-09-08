@@ -87,6 +87,10 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
               <li key={ingredient}>{ingredient}</li>
             ))}
           </ul>
+
+          <button onClick={() => addFavourite(recipe)}>
+            Add to favourites
+          </button>
         </>
       )}
     </div>
