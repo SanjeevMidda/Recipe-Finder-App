@@ -3,10 +3,15 @@ import type { Meal } from "../types/Meal";
 
 type RecipeCardProps = {
   recipe: Meal;
-  addFavourite: (recipe: Meal) => void;
+  addFavourite?: (recipe: Meal) => void;
+  removeFavourite?: (recipeId: string) => void;
 };
 
-const RecipeCard = ({ recipe, addFavourite }: RecipeCardProps) => {
+const RecipeCard = ({
+  recipe,
+  addFavourite,
+  removeFavourite,
+}: RecipeCardProps) => {
   return (
     <div className="recipeCardContainer">
       <Link to={`/recipe/${recipe.idMeal}`}>
@@ -16,7 +21,15 @@ const RecipeCard = ({ recipe, addFavourite }: RecipeCardProps) => {
         <h4>{recipe.strArea}</h4>
       </Link>
 
-      <button onClick={() => addFavourite(recipe)}>Add to favourites</button>
+      {addFavourite && (
+        <button onClick={() => addFavourite(recipe)}>Add to favourites</button>
+      )}
+
+      {removeFavourite && (
+        <button onClick={() => removeFavourite(recipe.idMeal)}>
+          Remove from favourites
+        </button>
+      )}
     </div>
   );
 };
