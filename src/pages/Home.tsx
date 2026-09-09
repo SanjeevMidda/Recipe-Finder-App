@@ -15,9 +15,9 @@ const Home = () => {
       </p>
 
       <div className="imageContainer">
-        <img src={foodImageOne} alt="" />
-        <img src={foodImageTwo} alt="" />
-        <img src={foodImageThree} alt="" />
+        <img src={foodImageOne} alt="foodImageOne" />
+        <img src={foodImageTwo} alt="foodImageTwo" />
+        <img src={foodImageThree} alt="foodImageThree" />
       </div>
     </div>
   );
