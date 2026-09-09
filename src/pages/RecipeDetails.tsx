@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
 import { getRecipeById } from "../services/recipeAPI";
-import LoadingState from "./LoadingState";
+import LoadingState from "../components/LoadingState";
+import EmptyState from "../components/EmptyState";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
@@ -64,7 +65,9 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
 
       {status === "error" && <p>Something went wrong. Please try again.</p>}
 
-      {status === "success" && !recipe && <p>Recipe not found.</p>}
+      {status === "success" && !recipe && (
+        <EmptyState message="Recipe not found." />
+      )}
 
       {status === "success" && recipe && (
         <>

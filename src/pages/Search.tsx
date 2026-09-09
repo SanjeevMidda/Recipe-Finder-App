@@ -2,7 +2,8 @@ import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import type { Meal } from "../types/Meal";
 import { searchRecipes } from "../services/recipeAPI";
-import LoadingState from "./LoadingState";
+import LoadingState from "../components/LoadingState";
+import EmptyState from "../components/EmptyState";
 
 type SearchProps = {
   addFavourite: (recipe: Meal) => void;
@@ -41,7 +42,9 @@ const Search = ({ addFavourite }: SearchProps) => {
   return (
     <div className="searchContainer">
       <div className="searchResults">
-        {searchStatus === "idle" && <p>Search for a recipe.</p>}
+        {searchStatus === "idle" && (
+          <EmptyState message="Search for a recipe." />
+        )}
 
         {searchStatus === "loading" && <LoadingState />}
 
