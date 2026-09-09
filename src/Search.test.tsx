@@ -90,3 +90,24 @@ test("renders search results", async () => {
 
   expect(await screen.findByText("Chicken Curry")).toBeInTheDocument();
 });
+
+test("renders empty state when no recipes are found", async () => {
+  mockedSearchRecipes.mockResolvedValue({
+    meals: null,
+  });
+
+  render(<Search addFavourite={jest.fn()} />);
+
+  const input = screen.getByRole("textbox");
+  const button = screen.getByRole("button", { name: "Search" });
+
+  fireEvent.change(input, {
+    target: { value: "somethingthatdoesnotexist" },
+  });
+
+  fireEvent.click(button);
+
+  expect(
+    await screen.findByText("No recipes found. Try another search.")
+  ).toBeInTheDocument();
+});
