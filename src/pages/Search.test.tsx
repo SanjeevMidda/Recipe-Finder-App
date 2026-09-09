@@ -1,14 +1,14 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Search from "./pages/Search";
-import { searchRecipes } from "./services/recipeAPI";
-import type { Meal } from "./types/Meal";
+import Search from "./Search";
+import { searchRecipes } from "../services/recipeAPI";
+import type { Meal } from "../types/Meal";
 
 jest.mock("react-router-dom", () => ({
   Link: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-jest.mock("./services/recipeAPI");
+jest.mock("../services/recipeAPI");
 
 const mockedSearchRecipes = searchRecipes as jest.MockedFunction<
   typeof searchRecipes
