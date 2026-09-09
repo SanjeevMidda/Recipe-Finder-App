@@ -111,3 +111,30 @@ test("renders empty state when no recipes are found", async () => {
     await screen.findByText("No recipes found. Try another search.")
   ).toBeInTheDocument();
 });
+
+test("adds a recipe to favourites", async () => {
+  mockedSearchRecipes.mockResolvedValue({
+    meals: [recipe],
+  });
+
+  const addFavourite = jest.fn();
+
+  render(<Search addFavourite={addFavourite} />);
+
+  const input = screen.getByRole("textbox");
+  const searchButton = screen.getByRole("button", { name: "Search" });
+
+  fireEvent.change(input, {
+    target: { value: "chicken" },
+  });
+
+  fireEvent.click(searchButton);
+
+  const favouriteButton = await screen.findByRole("button", {
+    name: "Add to favourites",
+  });
+
+  fireEvent.click(favouriteButton);
+
+  expect(addFavourite).toHaveBeenCalledWith(recipe);
+});
