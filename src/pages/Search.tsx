@@ -69,6 +69,7 @@ const Search = ({ addFavourite }: SearchProps) => {
       </div>
 
       <div className="findContainer">
+        <label htmlFor="searchInput">Search for a recipe</label>
         <input
           type="text"
           id="searchInput"
