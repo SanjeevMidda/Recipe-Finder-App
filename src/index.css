@@ -135,3 +135,15 @@ img {
   border: 1px solid rgb(207, 207, 207);
   color: rgb(150, 150, 150);
 }
+
+.searchResults {
+  overflow: scroll;
+}
+.recipeCardContainer {
+  width: 30dvw;
+  margin: 20px;
+  img {
+    width: 70%;
+    height: 70%;
+  }
+}
