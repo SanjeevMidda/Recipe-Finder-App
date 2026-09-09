@@ -4,6 +4,7 @@ import type { Meal } from "../types/Meal";
 import { getRecipeById } from "../services/recipeAPI";
 import LoadingState from "../components/LoadingState";
 import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
@@ -63,7 +64,9 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
     <div className="recipeDetailsContainer">
       {(status === "idle" || status === "loading") && <LoadingState />}
 
-      {status === "error" && <p>Something went wrong. Please try again.</p>}
+      {status === "error" && (
+        <ErrorState message="Something went wrong. Please try again." />
+      )}
 
       {status === "success" && !recipe && (
         <EmptyState message="Recipe not found." />

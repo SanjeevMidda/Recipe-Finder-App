@@ -4,6 +4,7 @@ import type { Meal } from "../types/Meal";
 import { searchRecipes } from "../services/recipeAPI";
 import LoadingState from "../components/LoadingState";
 import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
 
 type SearchProps = {
   addFavourite: (recipe: Meal) => void;
@@ -48,7 +49,7 @@ const Search = ({ addFavourite }: SearchProps) => {
 
         {searchStatus === "loading" && <LoadingState />}
 
-        {searchStatus === "error" && <p>{error}</p>}
+        {searchStatus === "error" && <ErrorState message={error} />}
 
         {searchStatus === "success" && recipes.length === 0 && (
           <p>No recipes found. Try another search.</p>
