@@ -8,28 +8,25 @@ import Navigation from "./components/Navigation";
 import Search from "./pages/Search";
 import RecipeDetails from "./pages/RecipeDetails";
 
+import {
+  addFavourite as addFavouriteToList,
+  removeFavourite as removeFavouriteFromList,
+} from "./utils/favourites";
+
 import type { Meal } from "./types/Meal";
 
 function App() {
   const [favourites, setFavourites] = useState<Meal[]>([]);
 
   const addFavourite = (recipe: Meal) => {
-    setFavourites((previousFavourites) => {
-      if (
-        previousFavourites.some(
-          (favourite) => favourite.idMeal === recipe.idMeal
-        )
-      ) {
-        return previousFavourites;
-      }
-
-      return [...previousFavourites, recipe];
-    });
+    setFavourites((previousFavourites) =>
+      addFavouriteToList(previousFavourites, recipe)
+    );
   };
 
   const removeFavourite = (recipeId: string) => {
     setFavourites((previousFavourites) =>
-      previousFavourites.filter((favourite) => favourite.idMeal !== recipeId)
+      removeFavouriteFromList(previousFavourites, recipeId)
     );
   };
 
