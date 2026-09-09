@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Meal } from "../types/Meal";
 import { getRecipeById } from "../services/recipeAPI";
+import LoadingState from "./LoadingState";
 
 type RecipeDetailsProps = {
   addFavourite: (recipe: Meal) => void;
@@ -59,7 +60,7 @@ const RecipeDetails = ({ addFavourite }: RecipeDetailsProps) => {
 
   return (
     <div className="recipeDetailsContainer">
-      {(status === "idle" || status === "loading") && <p>Loading...</p>}
+      {(status === "idle" || status === "loading") && <LoadingState />}
 
       {status === "error" && <p>Something went wrong. Please try again.</p>}
 
